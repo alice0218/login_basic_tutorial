@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Member Only</title>
   <script>
-    if (typeof(user) === 'undefined') {
+    const cookies = document.cookie.split(';')
+    let isMember = false;
+    const res = cookies.map(c => {
+      const kv = c.split('=');
+      if (kv[0].trim() === 'id' && kv[1].trim() === 'user') {
+        isMember = true;
+      }
+    })
+
+    if (!isMember) {
       window.location.href = 'login.html'
     }
   </script>
 </head>
+
 <body>
   Member Only!!
 </body>
+
 </html>
