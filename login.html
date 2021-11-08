@@ -26,7 +26,9 @@
       event.preventDefault();
       const username = document.getElementById('uname').value
       const password = document.getElementById('psw').value
-      console.log(username, password)
+      if (username==='user' && password === '123') {
+        window.location.href = 'member_only.html'
+      }
     }
 
   </script>
