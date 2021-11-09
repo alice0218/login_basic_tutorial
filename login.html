@@ -11,22 +11,35 @@
 <body>
   <form onsubmit="login(event)">
 
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" id="uname" name="uname" required><br>
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" id="uname" name="uname" required><br>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" id="psw" name="psw" required><br>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" id="psw" name="psw" required><br>
 
-      <button type="submit">Login</button>
+    <button type="submit">Login</button>
 
   </form>
 
   <script>
-    function login(event){
+    async function isMember(id, pw) {
+      const res = await fetch('http://localhost:3000/api/login', {
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify({ id: id, pw: pw }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json());
+      console.log(res);
+      return res.msg === 'OK';
+    }
+
+    async function login(event) {
       event.preventDefault();
       const username = document.getElementById('uname').value
       const password = document.getElementById('psw').value
-      if (username==='user' && password === '123') {
+      if (await isMember(username, password)) {
         window.location.href = 'member_only.html'
         document.cookie = `id=${username}`
       }
