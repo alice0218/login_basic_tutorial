@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Page Application</title>
+</head>
+
+<style>
+  .hide {
+    display: none
+  }
+
+  .show {
+    display: block
+  }
+</style>
+
+<body>
+  SPA Example <br>
+  <button onclick="show('public_info')">For Everyone</button>
+  <button onclick="show('member_info')">Member Only</button>
+  <button onclick="show('login_dialog')">Login Dialog</button>
+  <hr>
+  <div id="login_dialog" class="hide">Login
+    <form onsubmit="login(event)">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" id="uname" name="uname" required><br>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" id="psw" name="psw" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+  <hr>
+  <div id="public_info" class="hide primery">For Everyone</div>
+  <hr>
+  <div id="member_info" class="hide">Member Only</div>
+  <script>
+    function isAuthorized() {
+      const cookies = document.cookie.split(';')
+      let isMember = false;
+      const res = cookies.map(c => {
+        const kv = c.split('=');
+        if (kv[0].trim() === 'id' && kv[1].trim() === 'user') {
+          isMember = true;
+        }
+      })
+      return isMember
+
+    }
+
+    function show(id) {
+      if (id === 'member_info') {
+        if (!isAuthorized()) {
+          id = 'login_dialog'
+        }
+      }
+      classes = document.getElementById(id).classList
+      classes.remove('hide')
+      classes.add('show')
+    }
+
+    async function isMember(id, pw) {
+      const res = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ id: id, pw: pw }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json());
+      console.log(res);
+      return res.msg === 'OK';
+    }
+
+    async function login(event) {
+      event.preventDefault();
+      const username = document.getElementById('uname').value
+      const password = document.getElementById('psw').value
+      if (await isMember(username, password)) {
+        document.cookie = `id=${username}`
+        show('member_info')
+      }
+    }
+
+  </script>
+</body>
+
+</html>
