@@ -5,7 +5,31 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Member Only</title>
+  <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cesium.com/downloads/cesiumjs/releases/1.76/Build/Cesium/Cesium.js"></script>
+<link
+  href="https://cesium.com/downloads/cesiumjs/releases/1.76/Build/Cesium/Widgets/widgets.css"
+  rel="stylesheet"
+/>
+<link
+rel="stylesheet"
+href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+crossorigin="anonymous"
+/>
+<link
+rel="stylesheet"
+href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+crossorigin="anonymous"
+/>
+
+
+  <title>MND MT-InSAR</title>
   <script>
     const cookies = document.cookie.split(';')
     let isMember = false;
@@ -23,7 +47,222 @@
 </head>
 
 <body>
-  Member Only!!
-</body>
+  <script>
+    // Zoom In
+    function zoomIn() {
+      viewer.camera.zoomIn(
+        (viewer.camera.positionCartographic.height /
+          Math.abs(Math.sin(viewer.camera.pitch))) *
+          0.2
+      );
+    }
+    // Zoom Out
+    function zoomOut() {
+      viewer.camera.zoomOut(
+        (viewer.camera.positionCartographic.height /
+          Math.abs(Math.sin(viewer.camera.pitch))) *
+          0.2
+      );
+    }
+    function addZoomButtons() {
+      if (configdata.map3d.zoomButtons && configdata.map3d.zoomButtons.show) {
+        let htmlEle =
+          '<div id="zoomButtons">' +
+          '<button id="zoomIn">+</button><br>' +
+          '<button id="zoomOut">-</button>' +
+          "</div>";
+        $("body").append(htmlEle);
+        $("#zoomButtons").css(configdata.map3d.zoomButtons.css);
+        $("#zoomButtons>button").css({
+          width: "30px",
+          height: "30px",
+          "font-size": "20px",
+          margin: "5px 0px",
+          color: "black"
+        });
+      }
+    }
+  </script>
 
+  <!--   /*************************************************************************************** -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark text-white">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="https://eie.ccit.ndu.edu.tw/"
+        ><img
+          src="https://cdn.glitch.me/e0b77fbb-cb7b-4387-bbdd-983ca4d95859%2F200124766.png?v=1637131032250"
+          width="40"
+          height="40"
+      /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapsibleNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <h4>MT-InSAR</h4>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              >空軍</a
+            >
+        
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.849654, 24.536816,3000,0,-80)"
+                  >東澳嶺</a
+                >
+              </li>
+            
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.587930, 23.889021,2500,-10,-90)"
+                  >賀田山</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              >海軍</a
+            >
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.867854, 24.596524,3500,0,-80)"
+                  >蘇澳</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(120.291656, 22.687742,7000,0,-80)"
+                  >左營</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              >陸軍</a
+            >
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.581036,24.998347,1500,-20,-20)"
+                  >台北101</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.547393,25.052080,1500,-0,-20)"
+                  >大直</a
+                >
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.551630,25.034284,1500,-20,-90)"
+                  >台北南港區</a
+                >
+              </li>
+            </ul>
+          </li>
+          
+           <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              >其他</a
+            >
+          </li>
+            <ul class="dropdown-menu">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onclick="flyToDegrees(121.547834,  24.8463441,3000,0,-80)"
+                  >烏來</a
+                >
+              </li>
+          
+          
+          
+        </ul>
+          </ul>
+      </div>
+      <form class="d-flex" role="search" id="form">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Google..."
+          aria-label="Search"
+          data-table="order-table"
+           id="query"
+        />
+
+        <button class="btn1 btn-outline-primary" type="submit">
+          <path
+            class="path1"
+            d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"
+          ></path
+          ><i class="fa fa-search"></i>
+        </button>
+        <script>
+          const f = document.getElementById("form");
+          const q = document.getElementById("query");
+          const google = "https://www.google.com/search?q=site%3A+";
+          const site = "pagedart.com";
+
+          function submitted(event) {
+            event.preventDefault();
+            const url = google + site + "+" + q.value;
+            const win = window.open(url, "_blank");
+            win.focus();
+          }
+
+          f.addEventListener("submit", submitted);
+        </script>
+      </form>
+    </div>
+  </nav>
+
+  <div id="cesiumContainer"></div>
+  <script src="token.js"></script>
+  <script src="script.js"></script>
+<!--     <script src="flowerscript.js"></script> -->
+  <script src="funs.js"></script>
+</body>
 </html>

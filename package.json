@@ -1,17 +1,31 @@
 {
   "name": "login_app",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@craco/craco": "^6.4.3",
+    "cesium": "^1.91.0",
     "cors": "^2.8.5",
+    "craco-cesium": "^1.2.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.14"
-  }
+    "nodemon": "^2.0.14",
+    "react-router-dom": "^6.2.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chiangyiyang/login_basic_tutorial.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chiangyiyang/login_basic_tutorial/issues"
+  },
+  "homepage": "https://github.com/chiangyiyang/login_basic_tutorial#readme",
+  "description": ""
 }

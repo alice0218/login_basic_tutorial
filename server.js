@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 
 app.post('/api/login', (req, res) => {
   console.log(req.body)
-  if (req.body.id === 'user' && req.body.pw === '123') {
+  if (req.body.id === 'user' && req.body.pw === '0308') {
     res.send({ msg: 'OK' })
   } else {
     res.send({ msg: 'NO' })
